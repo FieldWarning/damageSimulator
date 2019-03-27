@@ -1,0 +1,10 @@
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\bin\Debug\Damage Simulation Algo.exe.config
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\bin\Debug\Damage Simulation Algo.exe
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\bin\Debug\Damage Simulation Algo.pdb
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage Simulation Algo.csprojAssemblyReference.cache
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage_Simulation_Algo.Checker.resources
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage_Simulation_Algo.Properties.Resources.resources
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage Simulation Algo.csproj.GenerateResource.cache
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage Simulation Algo.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage Simulation Algo.exe
+C:\Users\admin\source\repos\Damage Simulation Algo\Damage Simulation Algo\obj\Debug\Damage Simulation Algo.pdb
