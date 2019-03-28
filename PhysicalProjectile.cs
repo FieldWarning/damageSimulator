@@ -154,7 +154,7 @@ namespace Damage_Simulation_Algo.DamageClasses
             Math.Round(vehicle.Armor, 2);
             Math.Round(vehicle.Health, 2);
 
-            return new float[] {vehicle.Armor, vehicle.Health};
+            return new float[] {vehicle.Armor, vehicle.Health, era.Plates};
         }
     }
 }
