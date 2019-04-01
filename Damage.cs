@@ -6,7 +6,6 @@ namespace PhysicalDamage.Core
 {
     abstract class Damage
     {
-        #region DamageType
         protected EDamageTypes damageType;
 
         public EDamageTypes DamageType
@@ -17,14 +16,14 @@ namespace PhysicalDamage.Core
                 return damageType;
             }
         }
-        #endregion
 
-        #region TargetAttribute
         public struct Target
         {
             public float Armor;
 
             public ERA ERAData;
+
+            public float Health;
         }
 
         public struct ERA
@@ -33,28 +32,29 @@ namespace PhysicalDamage.Core
 
             public float KEFractionMultiplier;
 
-            public float HEATFractionMultiplier;
+            public float HeatFractionMultiplier;
         }
-        #endregion
 
-        protected Target target;
+        protected Target _target;
 
         public Damage(EDamageTypes dt, Target t)
         {
             // In base class constructor, pass in the type of damage
             damageType = dt;
             // And the target
-            target = t;
+            _target = t;
         }
 
         /// <Summary>
-        /// Use this method to deal damage
-        /// This method only calculates HP damage, deal with armour degradation in separate method
+        /// Use this method to deal damage.
+        /// This method returns a Target struct
+        /// containing updated values of Health, Armor and ERA stats.
         /// </Summary>
-        virtual public float DealDamage()
+        virtual public Target CalculateDamage()
         {
             // Override this function to specify damage algorithm
-            return 0.0;
+            Target finalState;
+            return finalState;
         }
     }
 
@@ -62,8 +62,8 @@ namespace PhysicalDamage.Core
     {
         KE,
         HEAT,
-        FIRE,
-        LASER,
+        Fire,
+        Laser,
         HE
     }
 }

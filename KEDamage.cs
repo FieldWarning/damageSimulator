@@ -8,42 +8,62 @@ namespace PhysicalDamage.Core
     {
         public struct KineticData
         {
+            /// <summary>
+            /// The pierce of the shot
+            /// </summary>
             public float Pierce;
-
+            /// <summary>
+            /// Distance between the units
+            /// </summary>
             public float Distance;
-
-            public float ArmorKEFactor;
-
-            public float HealthKEFactor;
-
+            /// <summary>
+            /// Multiplier for armor degradation
+            /// </summary>
+            public float ArmorDegradationFactor;
+            /// <summary>
+            /// Multiplier for health damage
+            /// </summary>
+            public float HealthDamageFactor;
+            /// <summary>
+            /// Air friction constant used in calculation of attenuation
+            /// </summary>
             public float FrictionFactor;
         }
 
-        private KineticData data;
+        private KineticData _keData;
 
         public KEDamage(KineticData d,Damage.Target t):base(EDamageTypes.KE, t)
         {
-            data = d;
+            _keData = d;
         }
 
-        override public float DealDamage()
+        public override Target CalculateDamage()
         {
+            Target finalState = _target;
+
             // Calculate attenuation of air friction
-            data.Pierce = CalculateKEAttenuationSimple(data.Pierce,data.Distance,data.FrictionFactor);
+            _keData.Pierce = CalculateKEAttenuationSimple(_keData.Pierce,_keData.Distance,_keData.FrictionFactor);
 
             // Calculate effects of ERA
-            UpdateTargetERA(data.Pierce);
-            data.Pierce = CalculatePostERAPierce(data.Pierce,target.ERAData.KEFractionMultiplier);
+            float finalERA = Math.Max(0.0f, _target.ERAData.CurrentValue
+             - _keData.Pierce*_target.ERAData.KEFractionMultiplier);
+            finalState.ERAData.CurrentValue = finalERA;
+            
+            _keData.Pierce = CalculatePostERAPierce(_keData.Pierce,_target.ERAData.KEFractionMultiplier);
 
             // Armor degradation
-            UpdateTargetArmor(data.Pierce);
+            float finalArmor = Math.Max(0.0f,
+             _target.Armor - (_keData.Pierce / _target.Armor)*_keData.ArmorDegradationFactor);
+            finalState.Armor = finalArmor;
 
             // Calculate final damage
-            float damage2HP = Math.Max(0.0f, data.Pierce - target.Armor)*data.HealthKEFactor;
-            return damage2HP;
+            float finalDamage = Math.Max(0.0f, _keData.Pierce - _target.Armor)*_keData.HealthDamageFactor;
+            float finalHealth = Math.Max(0.0f, _target.Health - finalDamage);
+            finalState.Health = finalHealth;
+            
+            return finalState;
         }
 
-        #region DamageCalculation
 
         private static float CalculateKEAttenuationSimple(float pierce, float distance, float frictionFactor)
         {
@@ -56,22 +76,5 @@ namespace PhysicalDamage.Core
             float finalPierce = pierce*(1-eraFractionMultiplier);
             return finalPierce;
         }
-        #endregion
-
-        #region UpdateValues
-
-        private void UpdateTargetERA(float piercePostAttenuation)
-        {
-            float ERAAfterHit = Math.Max(0.0f, target.ERAData.CurrentValue
-             - piercePostAttenuation*target.ERAData.KEFractionMultiplier);
-            // Use delegate function to update this value to target UnitData class
-        }
-
-        private void UpdateTargetArmor(float piercePostERA)
-        {
-            float ArmorAfterHit = Math.Max(0.0f, target.Armor - piercePostERA*data.ArmorKEFactor);
-            // Use delegate function to update this value to target UnitData class
-        }
-        #endregion
     }
 }
