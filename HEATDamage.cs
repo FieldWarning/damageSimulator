@@ -38,9 +38,9 @@ namespace PhysicalDamage.Core
             return damage2HP;
         }
 
-        private static float CalculatePostERAPierce(float pierce, float eraFrictionMultiplier)
+        private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
         {
-            float finalPierce = pierce*(1-eraFrictionMultiplier);
+            float finalPierce = pierce*(1-eraFractionMultiplier);
             return finalPierce;
         }
         
