@@ -20,12 +20,10 @@ namespace PhysicalDamage.Core
         }
 
         private KineticData data;
-        private Damage.Target target;
 
-        public KEDamage(KineticData d,Damage.Target t):base(EDamageTypes.KE)
+        public KEDamage(KineticData d,Damage.Target t):base(EDamageTypes.KE, t)
         {
             data = d;
-            target = t;
         }
 
         override public float DealDamage()
@@ -34,15 +32,16 @@ namespace PhysicalDamage.Core
             data.Pierce = CalculateKEAttenuationSimple(data.Pierce,data.Distance,data.FrictionFactor);
 
             // Calculate effects of ERA
+            UpdateTargetERA(data.Pierce);
             data.Pierce = CalculatePostERAPierce(data.Pierce,target.ERAData.KEFractionMultiplier);
 
-            // Calculate final damage
-            float finalDamage = Math.Max(0.0f, target.Armor - data.Pierce)*data.HealthKEFactor;
-            return finalDamage;
-        }
+            // Armor degradation
+            UpdateTargetArmor(data.Pierce);
 
-        // Then we implement a separate function for armour degradation,
-        // use callback function to update target armour value in its data model class
+            // Calculate final damage
+            float damage2HP = Math.Max(0.0f, data.Pierce - target.Armor)*data.HealthKEFactor;
+            return damage2HP;
+        }
 
         #region DamageCalculation
 
@@ -52,13 +51,26 @@ namespace PhysicalDamage.Core
             return finalPierce;
         }
         
-        private static float CalculatePostERAPierce(float pierce, float eraFrictionMultiplier)
+        private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
         {
-            float finalPierce = pierce*(1-eraFrictionMultiplier);
-
-            // Use some callback function to update target's era value here
-
+            float finalPierce = pierce*(1-eraFractionMultiplier);
             return finalPierce;
+        }
+        #endregion
+
+        #region UpdateValues
+
+        private void UpdateTargetERA(float piercePostAttenuation)
+        {
+            float ERAAfterHit = Math.Max(0.0f, target.ERAData.CurrentValue
+             - piercePostAttenuation*target.ERAData.KEFractionMultiplier);
+            // Use delegate function to update this value to target UnitData class
+        }
+
+        private void UpdateTargetArmor(float piercePostERA)
+        {
+            float ArmorAfterHit = Math.Max(0.0f, target.Armor - piercePostERA*data.ArmorKEFactor);
+            // Use delegate function to update this value to target UnitData class
         }
         #endregion
     }

@@ -29,7 +29,7 @@ namespace PhysicalDamage.Core
 
         public struct ERA
         {
-            public float currentValue;
+            public float CurrentValue;
 
             public float KEFractionMultiplier;
 
@@ -37,10 +37,14 @@ namespace PhysicalDamage.Core
         }
         #endregion
 
-        public Damage(EDamageTypes dt)
+        protected Target target;
+
+        public Damage(EDamageTypes dt, Target t)
         {
             // In base class constructor, pass in the type of damage
             damageType = dt;
+            // And the target
+            target = t;
         }
 
         /// <Summary>
