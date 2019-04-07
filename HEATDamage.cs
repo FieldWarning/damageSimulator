@@ -15,7 +15,7 @@ namespace PhysicalDamage.Core
             /// <summary>
             /// Multiplier for armor degradation
             /// </summary>
-            public float ArmorDegradationFactor;
+            public float Degradation;
             /// <summary>
             /// Multiplier for health damage
             /// </summary>
@@ -24,32 +24,49 @@ namespace PhysicalDamage.Core
 
         private HeatData _heatData;
 
-        public HeatDamage(HeatData d,Damage.Target t):base(EDamageTypes.HEAT, t)
+        public HeatDamage(HeatData data,Damage.Target target)
+            : base(DamageTypes.HEAT, target)
         {
-            _heatData = d;
+            this._heatData = data;
         }
 
         public override Target CalculateDamage()
         {
-            Target finalState = _target;
+            Target finalState = this.CurrentTarget;
+            HeatData he = _heatData;
 
             // No air friction attenuation as HEAT round detonates on surface of the armor
 
-            // Calculate effects of ERA
-            float finalERA = Math.Max(0.0f, _target.ERAData.CurrentValue
-             - _heatData.Pierce*_target.ERAData.HeatFractionMultiplier);
-            finalState.ERAData.CurrentValue = finalERA;
-            
-            _heatData.Pierce = CalculatePostERAPierce(_heatData.Pierce,_target.ERAData.HeatFractionMultiplier);
+            if (this.CurrentTarget.EraData.Value > 0.0f) {
+                // Calculate effects of ERA
+                float finalEra = Math.Max(
+                    0.0f,
+                    this.CurrentTarget.EraData.Value - he.Pierce * this.CurrentTarget.EraData.HeatFractionMultiplier
+                );
+                finalState.EraData.Value = finalEra;
+                
+                he.Pierce = CalculatePostERAPierce(
+                    he.Pierce,
+                    this.CurrentTarget.EraData.HeatFractionMultiplier
+                );
+            }
 
             // Armor degradation
-            float finalArmor = Math.Max(0.0f,
-             _target.Armor - (_heatData.Pierce / _target.Armor)*_heatData.ArmorDegradationFactor);
+            float finalArmor = Math.Max(
+                0.0f,
+                this.CurrentTarget.Armor - (he.Pierce / this.CurrentTarget.Armor) * he.Degradation
+            );
             finalState.Armor = finalArmor;
 
             // Calculate final damage
-            float finalDamage = Math.Max(0.0f, _heatData.Pierce - _target.Armor)*_heatData.HealthDamageFactor;
-            float finalHealth = Math.Max(0.0f, _target.Health - finalDamage);
+            float finalDamage = Math.Max(
+                0.0f,
+                (he.Pierce - this.CurrentTarget.Armor) * he.HealthDamageFactor
+            );
+            float finalHealth = Math.Max(
+                0.0f,
+                this.CurrentTarget.Health - finalDamage
+            );
             finalState.Health = finalHealth;
             
             return finalState;
@@ -57,7 +74,7 @@ namespace PhysicalDamage.Core
 
         private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
         {
-            float finalPierce = pierce*(1-eraFractionMultiplier);
+            float finalPierce = pierce * (1 - eraFractionMultiplier);
             return finalPierce;
         }
     }

@@ -13,13 +13,13 @@ namespace PhysicalDamage.Core
             /// </summary>
             public float Pierce;
             /// <summary>
-            /// Distance between the units
+            /// Distance between the firing unit and target unit
             /// </summary>
             public float Distance;
             /// <summary>
             /// Multiplier for armor degradation
             /// </summary>
-            public float ArmorDegradationFactor;
+            public float Degradation;
             /// <summary>
             /// Multiplier for health damage
             /// </summary>
@@ -32,33 +32,56 @@ namespace PhysicalDamage.Core
 
         private KineticData _keData;
 
-        public KEDamage(KineticData d,Damage.Target t):base(EDamageTypes.KE, t)
+        public KEDamage(KineticData data,Damage.Target target)
+            : base(DamageTypes.KE, target)
         {
-            _keData = d;
+            this._keData = data;
         }
 
         public override Target CalculateDamage()
         {
-            Target finalState = _target;
+            Target finalState = this.CurrentTarget;
+            KineticData ke = _keData;
 
             // Calculate attenuation of air friction
-            _keData.Pierce = CalculateKEAttenuationSimple(_keData.Pierce,_keData.Distance,_keData.FrictionFactor);
+            ke.Pierce = CalculateKEAttenuationSimple(
+                ke.Pierce,
+                ke.Distance,
+                ke.FrictionFactor
+            );
 
-            // Calculate effects of ERA
-            float finalERA = Math.Max(0.0f, _target.ERAData.CurrentValue
-             - _keData.Pierce*_target.ERAData.KEFractionMultiplier);
-            finalState.ERAData.CurrentValue = finalERA;
+            if (this.CurrentTarget.EraData.Value > 0.0f) {
+                // Calculate effects of ERA
+                float finalEra = Math.Max(
+                    0.0f,
+                    this.CurrentTarget.EraData.Value - _kineticData.Pierce * this.CurrentTarget.EraData.KEFractionMultiplier
+                );
+                finalState.EraData.Value = finalEra;
+
+                ke.Pierce = CalculatePostERAPierce(
+                    ke.Pierce,
+                    this.CurrentTarget.EraData.KEFractionMultiplier
+                );
+            }
             
-            _keData.Pierce = CalculatePostERAPierce(_keData.Pierce,_target.ERAData.KEFractionMultiplier);
+            
 
             // Armor degradation
-            float finalArmor = Math.Max(0.0f,
-             _target.Armor - (_keData.Pierce / _target.Armor)*_keData.ArmorDegradationFactor);
+            float finalArmor = Math.Max(
+                0.0f,
+                this.CurrentTarget.Armor - (ke.Pierce / this.CurrentTarget.Armor) * ke.Degradation
+            );
             finalState.Armor = finalArmor;
 
             // Calculate final damage
-            float finalDamage = Math.Max(0.0f, _keData.Pierce - _target.Armor)*_keData.HealthDamageFactor;
-            float finalHealth = Math.Max(0.0f, _target.Health - finalDamage);
+            float finalDamage = Math.Max(
+                0.0f,
+                (ke.Pierce - this.CurrentTarget.Armor) * ke.HealthDamageFactor
+            );
+            float finalHealth = Math.Max(
+                0.0f,
+                this.CurrentTarget.Health - finalDamage
+            );
             finalState.Health = finalHealth;
             
             return finalState;
@@ -67,14 +90,12 @@ namespace PhysicalDamage.Core
 
         private static float CalculateKEAttenuationSimple(float pierce, float distance, float frictionFactor)
         {
-            float finalPierce =  Math.Exp(-frictionFactor*distance)*pierce;
-            return finalPierce;
+            return  Math.Exp(-frictionFactor * distance) * pierce;
         }
         
         private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
         {
-            float finalPierce = pierce*(1-eraFractionMultiplier);
-            return finalPierce;
+            return pierce * (1 - eraFractionMultiplier);
         }
     }
 }
