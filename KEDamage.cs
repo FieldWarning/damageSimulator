@@ -32,7 +32,7 @@ namespace PhysicalDamage.Core
 
         private KineticData _keData;
 
-        public KEDamage(KineticData data,Damage.Target target)
+        public KEDamage(KineticData data,Target target)
             : base(DamageTypes.KE, target)
         {
             this._keData = data;
@@ -50,17 +50,17 @@ namespace PhysicalDamage.Core
                 ke.FrictionFactor
             );
 
-            if (this.CurrentTarget.EraData.Value > 0.0f) {
+            if (finalState.EraData.Value > 0.0f) {
                 // Calculate effects of ERA
                 float finalEra = Math.Max(
                     0.0f,
-                    this.CurrentTarget.EraData.Value - _kineticData.Pierce * this.CurrentTarget.EraData.KEFractionMultiplier
+                    finalState.EraData.Value - ke.Pierce * finalState.EraData.KEFractionMultiplier
                 );
                 finalState.EraData.Value = finalEra;
 
                 ke.Pierce = CalculatePostERAPierce(
                     ke.Pierce,
-                    this.CurrentTarget.EraData.KEFractionMultiplier
+                    finalState.EraData.KEFractionMultiplier
                 );
             }
             
@@ -69,18 +69,18 @@ namespace PhysicalDamage.Core
             // Armor degradation
             float finalArmor = Math.Max(
                 0.0f,
-                this.CurrentTarget.Armor - (ke.Pierce / this.CurrentTarget.Armor) * ke.Degradation
+                finalState.Armor - (ke.Pierce / finalState.Armor) * ke.Degradation
             );
             finalState.Armor = finalArmor;
 
             // Calculate final damage
             float finalDamage = Math.Max(
                 0.0f,
-                (ke.Pierce - this.CurrentTarget.Armor) * ke.HealthDamageFactor
+                (ke.Pierce - finalState.Armor) * ke.HealthDamageFactor
             );
             float finalHealth = Math.Max(
                 0.0f,
-                this.CurrentTarget.Health - finalDamage
+                finalState.Health - finalDamage
             );
             finalState.Health = finalHealth;
             

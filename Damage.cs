@@ -12,8 +12,14 @@ namespace PhysicalDamage.Core
             this.CurrentTarget = currentTarget;
         }
 
+        /// <Summary>
+        ///  A struct containing the data of the target of the damage
+        /// </Summary>
         public Target CurrentTarget { get; private set; }
 
+        /// <Summary>
+        ///  The type of the damage, indicated by a enum
+        /// </Summary>
         public DamageTypes DamageType { get; private set; }
 
         /// <Summary>
@@ -24,7 +30,7 @@ namespace PhysicalDamage.Core
         public virtual Target CalculateDamage()
         {
             // Override this function to specify damage algorithm
-            return CurrentTarget; // No damage dealt thus return the original state of the target
+            return this.CurrentTarget; // No damage dealt thus return the original state of the target
         }
 
         public struct Era

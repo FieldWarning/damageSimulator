@@ -24,7 +24,7 @@ namespace PhysicalDamage.Core
 
         private HeatData _heatData;
 
-        public HeatDamage(HeatData data,Damage.Target target)
+        public finalState(HeatData data,Target target)
             : base(DamageTypes.HEAT, target)
         {
             this._heatData = data;
@@ -37,35 +37,35 @@ namespace PhysicalDamage.Core
 
             // No air friction attenuation as HEAT round detonates on surface of the armor
 
-            if (this.CurrentTarget.EraData.Value > 0.0f) {
+            if (finalState.EraData.Value > 0.0f) {
                 // Calculate effects of ERA
                 float finalEra = Math.Max(
                     0.0f,
-                    this.CurrentTarget.EraData.Value - he.Pierce * this.CurrentTarget.EraData.HeatFractionMultiplier
+                    finalState.EraData.Value - he.Pierce * finalState.EraData.HeatFractionMultiplier
                 );
                 finalState.EraData.Value = finalEra;
                 
                 he.Pierce = CalculatePostERAPierce(
                     he.Pierce,
-                    this.CurrentTarget.EraData.HeatFractionMultiplier
+                    finalState.EraData.HeatFractionMultiplier
                 );
             }
 
             // Armor degradation
             float finalArmor = Math.Max(
                 0.0f,
-                this.CurrentTarget.Armor - (he.Pierce / this.CurrentTarget.Armor) * he.Degradation
+                finalState.Armor - (he.Pierce / finalState.Armor) * he.Degradation
             );
             finalState.Armor = finalArmor;
 
             // Calculate final damage
             float finalDamage = Math.Max(
                 0.0f,
-                (he.Pierce - this.CurrentTarget.Armor) * he.HealthDamageFactor
+                (he.Pierce - finalState.Armor) * he.HealthDamageFactor
             );
             float finalHealth = Math.Max(
                 0.0f,
-                this.CurrentTarget.Health - finalDamage
+                finalState.Health - finalDamage
             );
             finalState.Health = finalHealth;
             
@@ -74,8 +74,7 @@ namespace PhysicalDamage.Core
 
         private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
         {
-            float finalPierce = pierce * (1 - eraFractionMultiplier);
-            return finalPierce;
+            return pierce * (1 - eraFractionMultiplier);
         }
     }
 }
