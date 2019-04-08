@@ -1,65 +1,59 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Diagnostics;
 
 namespace PhysicalDamage.Core
 {
-    abstract class Damage
+    internal abstract class Damage
     {
-        #region DamageType
-        protected EDamageTypes damageType;
-
-        public EDamageTypes DamageType
+        protected Damage(DamageTypes damageType, Target currentTarget)
         {
-            // Once a damage has gained its type (in the constructor), its damage type should remain unchanged
-            get
-            {
-                return damageType;
-            }
-        }
-        #endregion
-
-        #region TargetAttribute
-        public struct Target
-        {
-            public float Armor;
-
-            public ERA ERAData;
-        }
-
-        public struct ERA
-        {
-            public float currentValue;
-
-            public float KEFractionMultiplier;
-
-            public float HEATFractionMultiplier;
-        }
-        #endregion
-
-        public Damage(EDamageTypes dt)
-        {
-            // In base class constructor, pass in the type of damage
-            damageType = dt;
+            this.DamageType = damageType;
+            this.CurrentTarget = currentTarget;
         }
 
         /// <Summary>
-        /// Use this method to deal damage
-        /// This method only calculates HP damage, deal with armour degradation in separate method
+        ///  A struct containing the data of the target of the damage
         /// </Summary>
-        virtual public float DealDamage()
+        public Target CurrentTarget { get; private set; }
+
+        /// <Summary>
+        ///  The type of the damage, indicated by a enum
+        /// </Summary>
+        public DamageTypes DamageType { get; private set; }
+
+        /// <Summary>
+        ///     Use this method to calculate damage.
+        ///     This method returns a Target struct
+        ///     containing updated values of Health, Armor and ERA stats.
+        /// </Summary>
+        public virtual Target CalculateDamage()
         {
             // Override this function to specify damage algorithm
-            return 0.0;
+            return this.CurrentTarget; // No damage dealt thus return the original state of the target
+        }
+
+        public struct Era
+        {
+            public float Value;
+            public float KEFractionMultiplier;
+            public float HeatFractionMultiplier;
+        }
+
+        public struct Target
+        {
+            public float Armor;
+            public Era EraData;
+            public float Health;
         }
     }
 
-    public enum EDamageTypes
+    public enum DamageTypes
     {
         KE,
         HEAT,
-        FIRE,
-        LASER,
-        HE
+        HE,
+        Fire,
+        Laser
     }
 }
