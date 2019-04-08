@@ -27,12 +27,12 @@ namespace PhysicalDamage.Core
             /// <summary>
             /// Air friction constant used in calculation of attenuation
             /// </summary>
-            public float FrictionFactor;
+            public float Friction;
         }
 
         private KineticData _keData;
 
-        public KEDamage(KineticData data,Target target)
+        public KEDamage(KineticData data, Target target)
             : base(DamageTypes.KE, target)
         {
             this._keData = data;
@@ -47,7 +47,7 @@ namespace PhysicalDamage.Core
             ke.Pierce = CalculateKEAttenuationSimple(
                 ke.Pierce,
                 ke.Distance,
-                ke.FrictionFactor
+                ke.Friction
             );
 
             if (finalState.EraData.Value > 0.0f) {
@@ -88,12 +88,12 @@ namespace PhysicalDamage.Core
         }
 
 
-        private static float CalculateKEAttenuationSimple(float pierce, float distance, float frictionFactor)
+        private static float CalculateKEAttenuationSimple(float pierce, float distance, float friction)
         {
-            return  Math.Exp(-frictionFactor * distance) * pierce;
+            return  Math.Exp(-friction * distance) * pierce;
         }
         
-        private static float CalculatePostERAPierce(float pierce, float eraFractionMultiplier)
+        private static float CalculatePostEraPierce(float pierce, float eraFractionMultiplier)
         {
             return pierce * (1 - eraFractionMultiplier);
         }
