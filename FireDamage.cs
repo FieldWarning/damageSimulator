@@ -10,7 +10,14 @@ namespace PhysicalDamage.Core
     {
         public struct FireData
         {
+            /// <summary>
+            /// Power of the burning effect
+            /// </summary>
             public float Power;
+            /// <summary>
+            /// Multiplier for health damage
+            /// </summary>
+            public float HealthDamageFactor;
         }
 
         private FireData _fireData;
