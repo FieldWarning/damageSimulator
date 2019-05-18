@@ -58,7 +58,7 @@ namespace PhysicalDamage.Core
                 );
                 finalState.EraData.Value = finalEra;
 
-                ke.Pierce = CalculatePostERAPierce(
+                ke.Pierce = CalculatePostEraPierce(
                     ke.Pierce,
                     finalState.EraData.KEFractionMultiplier
                 );
@@ -90,7 +90,7 @@ namespace PhysicalDamage.Core
 
         private static float CalculateKEAttenuationSimple(float pierce, float distance, float friction)
         {
-            return  Math.Exp(-friction * distance) * pierce;
+            return  (float)Math.Exp(-friction * distance) * pierce;
         }
         
         private static float CalculatePostEraPierce(float pierce, float eraFractionMultiplier)

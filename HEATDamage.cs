@@ -24,7 +24,7 @@ namespace PhysicalDamage.Core
 
         private HeatData _heatData;
 
-        public finalState(HeatData data, Target target)
+        public HeatDamage(HeatData data, Target target)
             : base(DamageTypes.HEAT, target)
         {
             this._heatData = data;
@@ -45,7 +45,7 @@ namespace PhysicalDamage.Core
                 );
                 finalState.EraData.Value = finalEra;
                 
-                he.Pierce = CalculatePostERAPierce(
+                he.Pierce = CalculatePostEraPierce(
                     he.Pierce,
                     finalState.EraData.HeatFractionMultiplier
                 );
