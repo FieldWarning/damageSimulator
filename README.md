@@ -1,6 +1,6 @@
-#Damage modelling 
+# Damage modelling 
 
-##Damage classes
+## Damage classes
 
 A collection of C# classes within PhysicalDamage namespace, aimed to provide Project field warning with the basic damage calculation ultility.
 
