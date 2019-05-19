@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
     class FireDamage : Damage
     {
@@ -30,7 +30,8 @@ namespace PhysicalDamage.Core
         public override Target CalculateDamage()
         {
             Target finalState = this.CurrentTarget;
-            throw new NotImplementedException();
+            finalState.Health -= _fireData.Power * _fireData.HealthDamageFactor;
+            return finalState;
         }
     }
 }

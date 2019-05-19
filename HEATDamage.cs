@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
     class HeatDamage:Damage
     {

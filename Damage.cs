@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
     /// <summary>
     /// The base class Damage, on which all damage classes are constructed

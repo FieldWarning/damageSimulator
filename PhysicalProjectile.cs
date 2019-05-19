@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
     public static class PhysicalProjectile
     {

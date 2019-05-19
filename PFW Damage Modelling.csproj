@@ -30,7 +30,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>PhysicalDamage.Core</RootNamespace>
+    <RootNamespace>PFW.Damage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +47,7 @@
     <Compile Include="HeatDamage.cs" />
     <Compile Include="HEDamage.cs" />
     <Compile Include="KEDamage.cs" />
+    <Compile Include="LightarmsDamage.cs" />
     <Compile Include="PhysicalProjectile.cs" />
   </ItemGroup>
   <ItemGroup>
