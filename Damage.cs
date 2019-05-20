@@ -80,6 +80,10 @@ namespace PFW.Damage
         /// <summary>
         /// Laser
         /// </summary>
-        LASER
+        LASER,
+        /// <summary>
+        /// Light arms damage
+        /// </summary>
+        LIGHTARMS
     }
 }

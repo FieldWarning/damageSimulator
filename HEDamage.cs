@@ -34,9 +34,12 @@ namespace PFW.Damage
         /// </summary>
         private const float CUTOFF_FRACTION = 0.01f; // Relocate this constant elsewhere when integrating
 
-        private readonly Dictionary<int, float> ArmorToMultiplier = new Dictionary<int, float>
+        /// <summary>
+        /// The lookup table that decides how much, in fraction of original value, the HE damage will be taken by a certain armor value
+        /// </summary>
+        private readonly Dictionary<int, float> ArmorToHEMultiplier = new Dictionary<int, float>
         {
-            { 0,1.0f},{1,0.5f},{2,0.25f},{3,0.1f}
+            {0, 1.0f},{1, 0.5f},{2, 0.25f},{3, 0.1f}
         };
 
         private const int ARMOR_CUTOFF = 4;
@@ -63,7 +66,7 @@ namespace PFW.Damage
             {
                 // Lookup multiplier from the table
                 float armorMultiplier;
-                bool lookupSuccessful = ArmorToMultiplier.TryGetValue((int)CurrentTarget.Armor, out armorMultiplier);
+                bool lookupSuccessful = ArmorToHEMultiplier.TryGetValue((int)CurrentTarget.Armor, out armorMultiplier);
                 if (lookupSuccessful)
                 {
                     he.Power = he.Power * armorMultiplier;
