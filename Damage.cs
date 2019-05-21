@@ -1,11 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
+    /// <summary>
+    /// The base class Damage, on which all damage classes are constructed
+    /// This class represents a damage dealt in an update, for one-time instant damage (e.g. KEDamage or HeatDamage), the class will be instantiated once
+    /// For continuous damage (e.g. FireDamage), the class will be instantiated once and the CalculateDamage will be called at every update (controlled by another script inherenting MonoBehaviour)
+    /// </summary>
     internal abstract class Damage
     {
+        /// <summary>
+        /// Damage type always take a Target struct representing the initial state of the target unit
+        /// </summary>
+        /// <param name="damageType"></param>
+        /// <param name="currentTarget"></param>
         protected Damage(DamageTypes damageType, Target currentTarget)
         {
             this.DamageType = damageType;
@@ -23,9 +35,8 @@ namespace PhysicalDamage.Core
         public DamageTypes DamageType { get; private set; }
 
         /// <Summary>
-        ///     Use this method to calculate damage.
-        ///     This method returns a Target struct
-        ///     containing updated values of Health, Armor and ERA stats.
+        /// Use this method to calculate damage.
+        /// Override this method in the child classes
         /// </Summary>
         public virtual Target CalculateDamage()
         {
@@ -50,10 +61,29 @@ namespace PhysicalDamage.Core
 
     public enum DamageTypes
     {
+        /// <summary>
+        /// Kinetic energy
+        /// </summary>
         KE,
+        /// <summary>
+        /// High-explosive anti-tank
+        /// </summary>
         HEAT,
+        /// <summary>
+        /// High-explosive none shaped-charge
+        /// </summary>
         HE,
-        Fire,
-        Laser
+        /// <summary>
+        /// Napalm burn damage
+        /// </summary>
+        FIRE,
+        /// <summary>
+        /// Laser
+        /// </summary>
+        LASER,
+        /// <summary>
+        /// Light arms damage
+        /// </summary>
+        LIGHTARMS
     }
 }

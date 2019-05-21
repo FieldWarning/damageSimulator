@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PFW Damage Modelling", "PFW Damage Modelling.csproj", "{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}.Debug|x86.ActiveCfg = Debug|x86
+		{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}.Debug|x86.Build.0 = Debug|x86
+		{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}.Release|x86.ActiveCfg = Release|x86
+		{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EED75D2A-A0B0-462A-9C21-87A2676733AE}
+	EndGlobalSection
+EndGlobal

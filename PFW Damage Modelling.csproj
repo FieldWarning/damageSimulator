@@ -1,0 +1,151 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{1DEDC9CF-07CC-45D5-BC6F-270668B965E5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>PFW.Damage</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Damage.cs" />
+    <Compile Include="FireDamage.cs" />
+    <Compile Include="HeatDamage.cs" />
+    <Compile Include="HEDamage.cs" />
+    <Compile Include="KEDamage.cs" />
+    <Compile Include="LightarmsDamage.cs" />
+    <Compile Include="PhysicalProjectile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\FETCH_HEAD" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\master" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\logs\refs\remotes\origin\master" />
+    <None Include=".git\logs\refs\remotes\upstream\GUI" />
+    <None Include=".git\logs\refs\remotes\upstream\master" />
+    <None Include=".git\objects\08\ab56cea50fea5bde968042b7e68e6c9d731b51" />
+    <None Include=".git\objects\0c\f44e41eef4c81ff9f7c594236d0ebed9661b0c" />
+    <None Include=".git\objects\0f\8bea645b3ed5c2d8873e382e932b68a581d3b1" />
+    <None Include=".git\objects\29\1253d971fc81443a1c4c3af477d35484d38a48" />
+    <None Include=".git\objects\32\2356753fa07641dd858a8ea04e4426da41a702" />
+    <None Include=".git\objects\33\63244ee53f55ac26f57e0bc65c80888cfca019" />
+    <None Include=".git\objects\3b\a5231c6a4514862f3a1d4eca1160b33a562489" />
+    <None Include=".git\objects\43\4a5f5c65689543edd8bd584f86c2d58a1039f7" />
+    <None Include=".git\objects\44\385be79cb23fa71d682399d12ac1dc76b15b4f" />
+    <None Include=".git\objects\4d\7a90873d00c8b829ea1894d1467f78c52c0969" />
+    <None Include=".git\objects\4f\d1b885c370d5e57df1881199d12b1243ec03b3" />
+    <None Include=".git\objects\52\57ff413077e6c3c15572b92dbe2abb29cc0a9b" />
+    <None Include=".git\objects\58\f4e2048db127dec33d331d10f380a4365c6a8e" />
+    <None Include=".git\objects\5b\d5baf5c038b0184dc37a60d25f1dad4ddc7eb1" />
+    <None Include=".git\objects\65\4580036e0ace88dcb59da9ad2a666d489951d7" />
+    <None Include=".git\objects\7c\7ec94dbc6772ed5b6b3f98be0e1bf4222dd22c" />
+    <None Include=".git\objects\83\7c15c8403adb9502353a1574bad1a4d0598907" />
+    <None Include=".git\objects\83\a65fda887b82d0a35e9efdafa714985374a459" />
+    <None Include=".git\objects\86\702ee35187ee0842568810027ecaff199ca64b" />
+    <None Include=".git\objects\8b\219fd6550374827158a8ac9f77570ec187a59c" />
+    <None Include=".git\objects\92\564345e75e880cbfb0d9b76b3fb42e0fab246a" />
+    <None Include=".git\objects\93\309b71ab3d5762bdaed5e84130d9cf280a35b0" />
+    <None Include=".git\objects\97\9b6bec6edc84f38b3b4e85cda85bf6580b1e76" />
+    <None Include=".git\objects\9f\20e9d7f785de3777e6e97fede4c57347729048" />
+    <None Include=".git\objects\9f\db760cb79b3daa4c91230e3ce33b55268954a3" />
+    <None Include=".git\objects\a2\63ecec3e282a88a9158e1e599471bdde98fcef" />
+    <None Include=".git\objects\b3\d457128a6a722b0ce25d98b53abb5663b52020" />
+    <None Include=".git\objects\b7\2365fad7af35c9ef0b659dda57cd4f4010d9ca" />
+    <None Include=".git\objects\bc\fdc15abaa13fd20bf55b4b4f6a029cd4c9b8fa" />
+    <None Include=".git\objects\c9\2e35c7f6db101e17b77c662bdbbaf513979b45" />
+    <None Include=".git\objects\cc\728351856dd08f864f5d7df0a4329160bdc8bf" />
+    <None Include=".git\objects\cd\ef57317f33a5f4ebab07597a6c3edc43fe04ee" />
+    <None Include=".git\objects\ce\0d51db29f62061cc0a27be911b17a47e1b29d8" />
+    <None Include=".git\objects\cf\d8dea3afe9475ebdb7f7232039c58e2b8521e9" />
+    <None Include=".git\objects\d1\9609d528f00148ec6a7391e5417e3508def2b3" />
+    <None Include=".git\objects\d6\f82ce0eb3dd98b21e65499f95fa0834c97b14f" />
+    <None Include=".git\objects\d9\958e92973d9436adde14247ce196175d47d871" />
+    <None Include=".git\objects\dc\d76c559f87e524a9064869ce5e150bae158d3c" />
+    <None Include=".git\objects\de\4510b7c02388d078abb8f8c82a170397181093" />
+    <None Include=".git\objects\e2\c1ada41c956b3d5593713fb0a15e6d8c082575" />
+    <None Include=".git\objects\e3\26a1a2635738a06bf3cbe5c77f0a206e7ca524" />
+    <None Include=".git\objects\f4\14e9df91a660073b75061b928723be4f9bcd12" />
+    <None Include=".git\objects\f6\e0f0226ec7e0a4c7ca789654224c4a362e4351" />
+    <None Include=".git\objects\f9\3a252f64ddbf4aaccd7d0e7a8b5871fe2b01b9" />
+    <None Include=".git\objects\fa\1d22405c8814c3c7f5ed3ab2fe023777b332e6" />
+    <None Include=".git\objects\pack\pack-924867746175c5da15670757e27c1a54755f5d5b.idx" />
+    <None Include=".git\objects\pack\pack-924867746175c5da15670757e27c1a54755f5d5b.pack" />
+    <None Include=".git\ORIG_HEAD" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\master" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\refs\remotes\origin\master" />
+    <None Include=".git\refs\remotes\upstream\GUI" />
+    <None Include=".git\refs\remotes\upstream\master" />
+    <None Include=".vs\OpenWG-damageModelling\v15\.suo" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="README.md" />
+    <None Include="WARNING.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".git\ms-persist.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+    <Folder Include=".vs\PFW Damage Modelling\v15\" />
+    <Folder Include="docs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

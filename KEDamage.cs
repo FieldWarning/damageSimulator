@@ -1,17 +1,19 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace PhysicalDamage.Core
+namespace PFW.Damage
 {
     class KEDamage:Damage
     {
         public struct KineticData
         {
             /// <summary>
-            /// The pierce of the shot
+            /// The power of the shot
             /// </summary>
-            public float Pierce;
+            public float Power;
             /// <summary>
             /// Distance between the firing unit and target unit
             /// </summary>
@@ -35,7 +37,7 @@ namespace PhysicalDamage.Core
         public KEDamage(KineticData data, Target target)
             : base(DamageTypes.KE, target)
         {
-            this._keData = data;
+            _keData = data;
         }
 
         public override Target CalculateDamage()
@@ -44,8 +46,8 @@ namespace PhysicalDamage.Core
             KineticData ke = _keData;
 
             // Calculate attenuation of air friction
-            ke.Pierce = CalculateKEAttenuationSimple(
-                ke.Pierce,
+            ke.Power = CalculateKEAttenuationSimple(
+                ke.Power,
                 ke.Distance,
                 ke.Friction
             );
@@ -54,29 +56,27 @@ namespace PhysicalDamage.Core
                 // Calculate effects of ERA
                 float finalEra = Math.Max(
                     0.0f,
-                    finalState.EraData.Value - ke.Pierce * finalState.EraData.KEFractionMultiplier
+                    finalState.EraData.Value - ke.Power * finalState.EraData.KEFractionMultiplier
                 );
                 finalState.EraData.Value = finalEra;
 
-                ke.Pierce = CalculatePostERAPierce(
-                    ke.Pierce,
+                ke.Power = CalculatePostEraPower(
+                    ke.Power,
                     finalState.EraData.KEFractionMultiplier
                 );
             }
-            
-            
 
             // Armor degradation
             float finalArmor = Math.Max(
                 0.0f,
-                finalState.Armor - (ke.Pierce / finalState.Armor) * ke.Degradation
+                finalState.Armor - (ke.Power / finalState.Armor) * ke.Degradation
             );
             finalState.Armor = finalArmor;
 
             // Calculate final damage
             float finalDamage = Math.Max(
                 0.0f,
-                (ke.Pierce - finalState.Armor) * ke.HealthDamageFactor
+                (ke.Power - finalState.Armor) * ke.HealthDamageFactor
             );
             float finalHealth = Math.Max(
                 0.0f,
@@ -88,14 +88,14 @@ namespace PhysicalDamage.Core
         }
 
 
-        private static float CalculateKEAttenuationSimple(float pierce, float distance, float friction)
+        private static float CalculateKEAttenuationSimple(float power, float distance, float friction)
         {
-            return  Math.Exp(-friction * distance) * pierce;
+            return  (float)Math.Exp(-friction * distance) * power;
         }
         
-        private static float CalculatePostEraPierce(float pierce, float eraFractionMultiplier)
+        private static float CalculatePostEraPower(float power, float eraFractionMultiplier)
         {
-            return pierce * (1 - eraFractionMultiplier);
+            return power * (1 - eraFractionMultiplier);
         }
     }
 }
